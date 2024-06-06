@@ -1,7 +1,7 @@
 import 'package:dashcam_sdk/src/log_util.dart';
 import 'package:intl/intl.dart';
 
-class DashCamCameraCommand {
+class CameraCommand {
   static const int wifiApStateEnabled = 13;
   static const String cgiPath = "/cgi-bin/Config.cgi";
   static const String actionSet = "set";
@@ -84,6 +84,16 @@ class DashCamCameraCommand {
 
   static String? getIpAddress() {
     return ipAddress;
+  }
+
+  static Future<Uri?> streamPreviewUrl({bool includeAudio = true}) async {
+    try {
+      String? ip = ipAddress;
+      return Uri.parse("rtsp://$ip/liveRTSP/${includeAudio ? "av4" : "v1"}");
+    } catch (e) {
+      LogUtil.debug(e);
+    }
+    return null;
   }
 
   static String buildArgument(String property, [String? value]) {
