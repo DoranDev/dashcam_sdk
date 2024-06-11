@@ -15,6 +15,7 @@ dependencies:
   open_settings_plus: ^0.3.3
   wifi_ip_details: ^1.0.0
   network_info_plus: ^5.0.3
+  xml: ^6.5.0
 
 
 dev_dependencies:
