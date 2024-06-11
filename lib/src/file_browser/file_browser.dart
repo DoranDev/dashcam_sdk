@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:xml/xml.dart';
 
 import '../../dashcam_sdk.dart';
+import '../log_util.dart';
 
 class FileBrowser {
   final Uri _uri;
@@ -50,6 +51,7 @@ class FileBrowser {
     }
 
     String responseBody = await response.transform(utf8.decoder).join();
+    LogUtil.debug(responseBody);
     responseBody = responseBody.substring(0, responseBody.lastIndexOf(">") + 1);
     return XmlDocument.parse(responseBody);
   }
