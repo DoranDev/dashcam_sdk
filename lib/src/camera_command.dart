@@ -1,4 +1,5 @@
 import 'package:dashcam_sdk/src/log_util.dart';
+import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 class CameraCommand {
@@ -90,6 +91,35 @@ class CameraCommand {
     try {
       String? ip = ipAddress;
       return Uri.parse("rtsp://$ip/liveRTSP/${includeAudio ? "av4" : "v1"}");
+    } catch (e) {
+      LogUtil.debug(e);
+    }
+    return null;
+  }
+
+  static Future<Response?> getCommand({required String property}) async {
+    try {
+      String? ip = ipAddress;
+      Dio dio = Dio();
+      final uriGet = Uri.parse(
+          "http://$ip/cgi-bin/Config.cgi?&action=get&property=$property");
+      final response = await dio.getUri(uriGet);
+      return response;
+    } catch (e) {
+      LogUtil.debug(e);
+    }
+    return null;
+  }
+
+  static Future<Response?> setCommand(
+      {required String property, required String value}) async {
+    try {
+      String? ip = ipAddress;
+      Dio dio = Dio();
+      final uriSet = Uri.parse(
+          "http://$ip/cgi-bin/Config.cgi?&action=set&property=$property&value=$value");
+      final response = await dio.getUri(uriSet);
+      return response;
     } catch (e) {
       LogUtil.debug(e);
     }
