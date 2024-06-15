@@ -97,6 +97,26 @@ class CameraCommand {
     return null;
   }
 
+  static Future<String> parseResponse(
+      {required String response, required String key}) async {
+    String value = "";
+
+    try {
+      List<String> lines = response.split('\n');
+      for (String line in lines) {
+        if (line.contains("$key=")) {
+          // Split the line by '=' to get the value
+          value = line.split('=')[1];
+          break;
+        }
+      }
+      return value;
+    } catch (e) {
+      LogUtil.debug(e);
+    }
+    return value;
+  }
+
   static Future<Response?> getCommand({required String property}) async {
     try {
       String? ip = ipAddress;
