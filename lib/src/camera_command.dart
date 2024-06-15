@@ -123,6 +123,7 @@ class CameraCommand {
       Dio dio = Dio();
       final uriGet = Uri.parse(
           "http://$ip/cgi-bin/Config.cgi?&action=get&property=$property");
+      LogUtil.debug(uriGet);
       final response = await dio.getUri(uriGet);
       return response;
     } catch (e) {
@@ -138,6 +139,7 @@ class CameraCommand {
       Dio dio = Dio();
       final uriSet = Uri.parse(
           "http://$ip/cgi-bin/Config.cgi?&action=set&property=$property&value=$value");
+      LogUtil.debug(uriSet);
       final response = await dio.getUri(uriSet);
       return response;
     } catch (e) {
