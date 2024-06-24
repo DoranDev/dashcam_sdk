@@ -97,8 +97,30 @@ class CameraCommand {
     return null;
   }
 
-  static Future<String> parseResponse(
-      {required String response, required String key}) async {
+  static Map<String, String> parseAllResponseToMap({required String response}) {
+    final Map<String, String> configMap = {};
+    try {
+      final lines = response.split('\n');
+
+      for (var line in lines) {
+        if (line.contains('=')) {
+          final parts = line.split('=');
+          if (parts.length == 2) {
+            final key = parts[0].trim();
+            final value = parts[1].trim();
+            configMap[key] = value;
+          }
+        }
+      }
+
+      return configMap;
+    } catch (e) {
+      LogUtil.debug(e);
+    }
+    return configMap;
+  }
+
+  static String parseResponse({required String response, required String key}) {
     String value = "";
 
     try {
