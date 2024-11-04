@@ -170,8 +170,7 @@ class CameraCommand {
     return null;
   }
 
-  static Future<Response?> deleteCommand(
-      {required String property, required String value}) async {
+  static Future<Response?> deleteCommand({required String property}) async {
     try {
       String? ip = ipAddress;
       Dio dio = Dio();
