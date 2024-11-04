@@ -170,6 +170,22 @@ class CameraCommand {
     return null;
   }
 
+  static Future<Response?> deleteCommand(
+      {required String property, required String value}) async {
+    try {
+      String? ip = ipAddress;
+      Dio dio = Dio();
+      final uriSet = Uri.parse(
+          "http://$ip/cgi-bin/Config.cgi?&action=del&property=$property");
+      LogUtil.debug(uriSet);
+      final response = await dio.getUri(uriSet);
+      return response;
+    } catch (e) {
+      LogUtil.debug(e);
+    }
+    return null;
+  }
+
   static String buildArgument(String property, [String? value]) {
     try {
       return "property=$property&value=${Uri.encodeComponent(value ?? '')}";
